@@ -2,9 +2,10 @@ import "../About/About.css";
 
 function About () {
     return (
-        <section className="About">
+        <section className="about">
         <div className="about__image-container">
             <img 
+                src="../../assets/Profile-Picture"
                 alt="About"
                 className="about__image"
             />

@@ -35,9 +35,13 @@
   border-left: 0;
   border-bottom: 2px solid white;
   margin-top: 30px;
+  margin-bottom: 0;
+  margin-right: 30px;
   color: white;
   opacity: 1;
   transition: opacity 0.5s ease-in-out;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .header__button-home:hover {
@@ -48,12 +52,15 @@
 .header__button-signin {
   font-weight: 500;
   font-family: "Roboto", Arial, Helvetica, sans-serif;
-  padding: 8px 20px;
-  margin: 19px 104px 13px 0;
+  padding: 8px 80px;
+  margin: 20px 13px 13px 20px;
   font-size: 18px;
   color: white;
-  border: none;
-  border-radius: 20px;
+  border-style: solid;
+  border-radius: 30px;
+  border-width: 2px;
+  border-color: #fff;
+  background-color: transparent;
 }
 
 .header__button-signin-outline {
@@ -70,21 +77,9 @@
   opacity: 0.6;
 }
 
-.header__menu {
-  display: none;
-  visibility: hidden;
-}
-
 .header__menu-icon {
   display: block;
   size: 100px;
-}
-.mobile__dropdown {
-  display: none;
-}
-
-.header--hidden {
-  display: none;
 }
 
 .header__profile-options {
@@ -196,6 +191,10 @@
   transition: opacity 0.5s ease-in-out;
 }
 
+.mobile__dropdown_header {
+  display: flex;
+}
+
 @media (max-width: 768px) {
   .header {
     margin: auto 0;
@@ -243,7 +242,7 @@
   }
 
   .mobile__dropdown {
-    display: none;
+    display: visible;
   }
 
   .header--hidden {
@@ -327,7 +326,7 @@
     display: none;
   }
 
-  .mobile_dropdown_header {
+  .mobile__dropdown_header {
     display: flex;
     flex-direction: row;
     padding: 16px;

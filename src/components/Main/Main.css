@@ -23,6 +23,7 @@
     font-size: 60px;
     font-family: "Roboto", Arial, Helvetica, sans-serif;
     font-weight: 400;
+    color: white;
   }
   
   .main__subtitle {
@@ -30,6 +31,7 @@
     margin-bottom: 88px;
     font-family: "Roboto", Arial, Helvetica, sans-serif;
     font-weight: 400;
+    color:white;
   }
   
   @media (max-width: 768px) {
