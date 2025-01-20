@@ -24,10 +24,7 @@ function App() {
   });
 
   const [activeModal, setActiveModal] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    const token = localStorage.getItem("authToken"); // Adjust key as needed
-    return token ? true : false;
-  })
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -86,6 +83,14 @@ function App() {
         console.error("Failed attempt to login", err);
       });
   };
+
+  // useEffect(() => {
+  //   checkToken(token).then((userData) => {
+  //     setIsLoggedIn(true);
+  //   }).catch((error) => {
+  //     setIsLoggedIn(false);
+  //   });
+  // }, []);
 
   const handleRegistration = (values) => {
     if (!values) return;
@@ -216,7 +221,11 @@ function App() {
         <CurrentUserContext.Provider value={userContext}>
           <div className="page__content">
             <div className="page__style">
-              <Header handleLoginClick={handleLoginClick} />
+              <Header 
+                handleLoginClick={handleLoginClick} 
+                handleLogin={handleLogin} 
+                isLoggedIn={isLoggedIn} 
+                handleLogout={handleLogout}/>
               <Routes>
                 <Route
                   path="/"
