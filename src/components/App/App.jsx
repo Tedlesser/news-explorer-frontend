@@ -6,10 +6,12 @@ import Main from "../Main/Main";
 import About from "../About/About";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
+import Results from "../Results/Results";
 import LoginModal from "../LoginModal/LoginModal";
 import RegisterModal from "../RegisterModal/RegisterModal";
+import { fetchNews } from "../../utils/newsAPI";
 import { setToken, removeToken } from "../../utils/token";
-import { authorize } from "../../utils/auth";
+import { authorize, checkToken } from "../../utils/auth";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import SavedNewsHeader from "../SavedNewsHeader/SavedNewsHeader";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
@@ -22,8 +24,21 @@ function App() {
   });
 
   const [activeModal, setActiveModal] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  // const [isLoading, setIsLoading] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    const token = localStorage.getItem("authToken"); // Adjust key as needed
+    return token ? true : false;
+  })
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [articles, setArticles] = useState([]);
+  const [visibleArticles, setVisibleArticles] = useState(3);
+  const showMoreArticles = () => {
+    setVisibleArticles((prev) => prev + 3);
+  };
+
+  console.log(isLoggedIn);
 
   const navigate = useNavigate();
 
@@ -54,7 +69,7 @@ function App() {
     if (!values) {
       return;
     }
-    signinUser(values)
+    authorize(values)
       .then((res) => {
         console.log(res);
         setToken(res.token);
@@ -75,9 +90,10 @@ function App() {
   const handleRegistration = (values) => {
     if (!values) return;
 
-    registerUser(values)
+    checkToken(values)
       .then((res) => {
         console.log(res);
+        localStorage.addItem("jwt");
         setIsLoggedIn(true);
         setCurrentUser(res.data);
         closeActiveModal();
@@ -112,6 +128,88 @@ function App() {
     };
   }, [activeModal]);
 
+  // Handle saving (liking) articles
+  const handleCardLike = (article) => {
+    const token = getToken();
+    if (!token) return;
+    // console.log(article);
+    const articleId = generateArticleId(article);
+    article.articleId = articleId;
+    // console.log(article.articleId);
+
+    // Attach the keywords (from searchQuery) to the article
+    article.keywords = searchQuery.split(" "); // Split search query into individual keywords
+
+    // console.log("Article with attached keywords:", article.keywords.slice(0,2)); // Log the article with keywords for confirmation
+
+    auth
+      .likeArticle(article, token) // Pass the articleId and article object to the API
+      .then((likedArticle) => {
+        setSavedArticles([...savedArticles, likedArticle]); // Add saved article to state
+      })
+      .catch(console.error);
+  };
+
+  const handleCardDelete = (article) => {
+    const token = getToken();
+    if (!token) return;
+
+    // Find the matching article in savedArticles by comparing URLs
+    const savedArticle = savedArticles.find(
+      (saved) => saved.url === article.url
+    );
+
+    if (savedArticle) {
+      const articleId = savedArticle._id; // Use MongoDB _id from savedArticles
+
+      // Call the backend to delete the article by its _id
+      auth
+        .deleteArticle(articleId, token) // API call to delete the article by _id
+        .then(() => {
+          console.log("Article deleted:", articleId);
+          // Remove the article from savedArticles state
+          setSavedArticles((prevArticles) =>
+            prevArticles.filter((a) => a._id !== articleId)
+          );
+        })
+        .catch((error) => {
+          console.error("Error deleting article:", error);
+        });
+    } else {
+      console.log("No matching saved article found for deletion.");
+    }
+  };
+
+  // Handle search logic
+  const handleSearch = async (searchQuery) => {
+    if (!searchQuery.trim()) {
+      setError("Please enter a keyword");
+      return;
+    }
+
+    setIsLoading(true);
+    setError(null);
+    setIsSubmitted(true);
+    setSearchQuery(searchQuery);
+
+    console.log("Search query captured:", searchQuery);
+
+    try {
+      const news = await fetchNews(searchQuery);
+
+      console.log("Fetched articles for query:", news); // Log fetched articles to ensure data is coming through
+
+      setArticles(news);
+      if (news.length === 0) {
+        setError("No articles found for this query.");
+      }
+    } catch (err) {
+      setError("Sorry, something went wrong during the request.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <>
       <div className="page">
@@ -123,13 +221,32 @@ function App() {
                 <Route
                   path="/"
                   element={
-                    <Main
-                      handleLoginClick={handleLoginClick}
-                      isLoggedIn={isLoggedIn}
-                      handleLogout={handleLogout}
-                    />
+                    <>
+                      <Main
+                        handleLoginClick={handleLoginClick}
+                        isLoggedIn={isLoggedIn}
+                        handleLogout={handleLogout}
+                        isLoading={isLoading}
+                        handleSearch={handleSearch}
+                        isSubmitted={isSubmitted}
+                      />
+                      {isSubmitted && (
+                        <Results
+                          isLoading={isLoading}
+                          error={error}
+                          articles={articles}
+                          onCardLike={handleCardLike}
+                          onCardDelete={handleCardDelete}
+                          // savedArticles={savedArticles}
+                          searchQuery={searchQuery}
+                          handleSearch={handleSearch}
+                          visibleArticles={visibleArticles}
+                          showMoreArticles={showMoreArticles}
+                        />
+                      )}
+                    </>
                   }
-                ></Route>
+                />
                 <Route
                   path="/saved-news"
                   element={
@@ -143,7 +260,7 @@ function App() {
                       />
                     </ProtectedRoute>
                   }
-                ></Route>
+                />
               </Routes>
               <About />
               <Footer />
@@ -160,6 +277,7 @@ function App() {
                 onClose={closeActiveModal}
                 setActiveModal={setActiveModal}
                 handleLoginModal={handleLoginModal}
+                handleRegistration={handleRegistration}
               />
             </div>
           </div>

@@ -2,17 +2,13 @@ import "./RegisterModal.css";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { useState, useEffect } from "react";
 import LoginModal from "../../components/LoginModal/LoginModal";
+import { checkToken } from "../../utils/auth";
 
-const RegisterModal = ({
-  onSignUp, 
-  isOpen, 
-  onClose,
-  handleLoginModal 
-}) => {
+const RegisterModal = ({ onSignUp, isOpen, onClose, handleLoginModal }) => {
   const [userEmail, setUserEmail] = useState("");
-  const [userPassword, setUserPassword] = useState(""); 
-  const [userName, setUserName] = useState(""); 
-  const [avatar, setAvatarUrl] = useState(""); 
+  const [userPassword, setUserPassword] = useState("");
+  const [userName, setUserName] = useState("");
+  const [avatar, setAvatarUrl] = useState("");
 
   useEffect(() => {
     if (isOpen === true) {
@@ -44,7 +40,7 @@ const RegisterModal = ({
 
   function handleSubmit(event) {
     event.preventDefault();
-    onSignUp(newUser);
+    checkToken(newUser);
   }
 
   return (
@@ -59,8 +55,8 @@ const RegisterModal = ({
       <button type="button" className="modal__escape"></button>
       <fieldset className="modal__inputs">
         <label className="modal__label">
-          Email*  
-          <input 
+          Email*
+          <input
             className="modal__input"
             type="email"
             name="email"
@@ -72,8 +68,8 @@ const RegisterModal = ({
           />
         </label>
         <label className="modal__label">
-          Password*  
-          <input 
+          Password*
+          <input
             className="modal__input"
             type="password"
             name="password"
@@ -85,8 +81,8 @@ const RegisterModal = ({
           />
         </label>
         <label className="modal__label">
-          Name*  
-          <input 
+          Name*
+          <input
             className="modal__input"
             type="text"
             name="name"
@@ -99,11 +95,21 @@ const RegisterModal = ({
         </label>
       </fieldset>
       <div className="modal__button-container">
-      <button type="submit" className="modal__submit" onSubmit={handleSubmit} > Sign Up </button>
-      <button type="button" className="modal__login" onClick={handleLoginModal}> <spn>or </spn> <spn className="highlighted">  Sign In</spn></button>
+        <button type="submit" className="modal__submit" onSubmit={handleSubmit}>
+          {" "}
+          Sign Up{" "}
+        </button>
+        <button
+          type="button"
+          className="modal__login"
+          onClick={handleLoginModal}
+        >
+          {" "}
+          <span>or </span> <span className="highlighted"> Sign In</span>
+        </button>
       </div>
     </ModalWithForm>
   );
 };
 
-export default RegisterModal
+export default RegisterModal;

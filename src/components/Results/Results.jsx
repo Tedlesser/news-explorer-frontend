@@ -1,26 +1,27 @@
 import React, { useState } from "react";
-import NewsCard from "../NewsCard/NewsCard";
 import "./Results.css";
+import NewsCard from "../NewsCard/NewsCard";
 import Preloader from "../Preloader/Preloader";
 
 const Results = ({
   isLoading,
   error,
   articles,
+  article,
   showMoreArticles,
   visibleArticles,
   onCardLike,
   onCardDelete,
   savedArticles,
 }) => {
-  if (isLoading) {
+ if (isLoading) {
     return (
-      <div className="results">
+      <div className="results result_type_preloader">
         <Preloader />
         <div>Searching for news...</div>
       </div>
     );
-  }
+ }
 
   if (error) {
     return (
@@ -28,12 +29,11 @@ const Results = ({
         <img className="results-image"></img>
         <p>
           <span className="results-not-found-title">
-            Sorry, something went wrong during the request.
+            Nothing found
           </span>{" "}
         </p>
         <span className="results-not-found-description">
-          There may be a connection issue or the server may be down. Please try
-          again later.
+          Sorry, but nothing matched your search terms. 
         </span>
       </div>
     );
