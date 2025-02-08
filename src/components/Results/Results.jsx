@@ -7,12 +7,13 @@ const Results = ({
   isLoading,
   error,
   articles,
-  article,
   showMoreArticles,
   visibleArticles,
   onCardLike,
   onCardDelete,
   savedArticles,
+  isLoggedIn,
+  
 }) => {
  if (isLoading) {
     return (
@@ -64,6 +65,7 @@ const Results = ({
             savedArticles={savedArticles}
             onCardLike={onCardLike}
             onCardDelete={onCardDelete}
+            isLoggedIn={isLoggedIn}
           />
         ))}
       </div>

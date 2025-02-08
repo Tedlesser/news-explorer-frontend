@@ -1,20 +1,19 @@
-import "./SavedCardList.css";
-import SavedNews from "../SavedNews/SavedNews";
-import { useState } from "react";
-const SavedNewsCardList = ({ savedArticles }) => {
-  const [visibleCount, setVisibleCount] = useState(5);
-  const handleShowMore = () => {
-    setVisibleCount((count) => {
-      return count + 3;
-    });
+import React from "react";
+import "./SavedCardList.css"; // Assuming you will have a separate CSS file for SavedCards
+import NewsCard from "../NewsCard/NewsCard";
+
+const SavedCardList = ({ savedArticles, onCardDelete, article }) => {
+  const handleDeleteClick = () => {
+    onCardDelete(article); // Call the delete function passed from props
   };
 
   return (
-    <section className="saved-news-list">
-      {savedArticles.slice(0, visibleCount).map((article, index) => (
-        <SavedNews key={index} article={article} />
+    <div className="saved-cards">
+      {savedArticles?.map((article) => (
+        <NewsCard key={article._id} article={article} />
       ))}
-    </section>
+    </div>
   );
 };
-export default SavedNewsCardList;
+
+export default SavedCardList;

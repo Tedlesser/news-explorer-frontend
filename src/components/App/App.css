@@ -17,6 +17,12 @@
     background-size: cover;
     background-position: center;
   }
+
+  .page__style__saved-news-active {
+    background-color: white;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;}
   
   @media  (max-width: 1440px) {
     .page__style {

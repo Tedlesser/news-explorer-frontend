@@ -13,6 +13,31 @@ export const checkToken = (token) => {
     });
   });
 }
+
+export const likeArticle = (article, token) => {
+  const articleJson = {
+    articleId: article.articleId,
+    title: article.title,
+    description: article.description,
+    urlToImage: article.urlToImage,
+    publishedAt: article.publishedAt,
+    sourceName: article.sourceName,
+    keywords: article.keywords || [],
+    url: article.url,
+  };
+
+  return request(`${BASE_URL}/article/${article.articleId}/like`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(articleJson),
+  });
+};
+
+
 // export const signinUser = ({ email, password }) => {
 //   return fetch(`${baseUrl}/signin`, {
 //     method: "POST",

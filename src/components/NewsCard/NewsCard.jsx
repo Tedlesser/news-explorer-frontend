@@ -19,7 +19,12 @@ const NewsCard = ({
     } else {
       onCardLike(article); // Call onCardLike if the article is not saved
     }
-  };    
+  };
+
+  // Handle like button click
+  const handleLikeClick = () => {
+    onCardLike(article); // Call onCardLike when the like button is clicked
+  };
 
   return (
     <div className="news-card">
@@ -39,15 +44,14 @@ const NewsCard = ({
         <p className="news-card__description">
           {article?.description || "No description available."}
         </p>
-        {isLoggedIn && ( // Show the bookmark button only if the user is logged in
-          <button
+        <div className="news-card__actions">
+          {isLoggedIn ? (<button
             className={`news-card__bookmark ${isSaved ? "saved" : ""}`}
             onClick={handleBookmarkClick}
             aria-label={isSaved ? "Remove from saved articles" : "Save article"}
           >
-            {isSaved ? "Saved" : "Save"}
-          </button>
-        )}
+          </button>) :("")}
+        </div>
       </div>
     </div>
   );

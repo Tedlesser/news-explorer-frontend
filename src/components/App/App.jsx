@@ -11,10 +11,11 @@ import LoginModal from "../LoginModal/LoginModal";
 import RegisterModal from "../RegisterModal/RegisterModal";
 import { fetchNews } from "../../utils/newsAPI";
 import { setToken, removeToken } from "../../utils/token";
-import { authorize, checkToken } from "../../utils/auth";
+import {authorize, checkToken } from "../../utils/auth";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import SavedNewsHeader from "../SavedNewsHeader/SavedNewsHeader";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import {getItems, saveArticle} from "../../utils/ThirdPartyApi";
 
 function App() {
   const [currentUser, setCurrentUser] = useState({
@@ -34,6 +35,8 @@ function App() {
   const showMoreArticles = () => {
     setVisibleArticles((prev) => prev + 3);
   };
+  const [savedArticles, setSavedArticles] = useState([]);
+  const isSavedNews = location.pathname === "/saved-news"
 
   console.log(isLoggedIn);
 
@@ -84,14 +87,6 @@ function App() {
       });
   };
 
-  // useEffect(() => {
-  //   checkToken(token).then((userData) => {
-  //     setIsLoggedIn(true);
-  //   }).catch((error) => {
-  //     setIsLoggedIn(false);
-  //   });
-  // }, []);
-
   const handleRegistration = (values) => {
     if (!values) return;
 
@@ -133,22 +128,25 @@ function App() {
     };
   }, [activeModal]);
 
+
+  
+
   // Handle saving (liking) articles
   const handleCardLike = (article) => {
-    const token = getToken();
+    const token = getItems();
+    console.log(token)
     if (!token) return;
     // console.log(article);
-    const articleId = generateArticleId(article);
+    const articleId = saveArticle(article);
     article.articleId = articleId;
-    // console.log(article.articleId);
+    console.log(article.articleId);
 
     // Attach the keywords (from searchQuery) to the article
     article.keywords = searchQuery.split(" "); // Split search query into individual keywords
 
     // console.log("Article with attached keywords:", article.keywords.slice(0,2)); // Log the article with keywords for confirmation
 
-    auth
-      .likeArticle(article, token) // Pass the articleId and article object to the API
+    saveArticle(article, token) // Pass the articleId and article object to the API
       .then((likedArticle) => {
         setSavedArticles([...savedArticles, likedArticle]); // Add saved article to state
       })
@@ -168,7 +166,7 @@ function App() {
       const articleId = savedArticle._id; // Use MongoDB _id from savedArticles
 
       // Call the backend to delete the article by its _id
-      auth
+      Auth
         .deleteArticle(articleId, token) // API call to delete the article by _id
         .then(() => {
           console.log("Article deleted:", articleId);
@@ -220,7 +218,7 @@ function App() {
       <div className="page">
         <CurrentUserContext.Provider value={userContext}>
           <div className="page__content">
-            <div className="page__style">
+            <div className={isSavedNews ? "page__style__saved-news-active" : "page__style"}>
               <Header 
                 handleLoginClick={handleLoginClick} 
                 handleLogin={handleLogin} 
@@ -246,11 +244,12 @@ function App() {
                           articles={articles}
                           onCardLike={handleCardLike}
                           onCardDelete={handleCardDelete}
-                          // savedArticles={savedArticles}
+                          savedArticles={savedArticles}
                           searchQuery={searchQuery}
                           handleSearch={handleSearch}
                           visibleArticles={visibleArticles}
                           showMoreArticles={showMoreArticles}
+                          isLoggedIn={isLoggedIn}
                         />
                       )}
                     </>
@@ -266,12 +265,13 @@ function App() {
                       <SavedNewsHeader
                         isLoggedIn={isLoggedIn}
                         handleLogout={handleLogout}
+                        savedArticles={savedArticles}
                       />
                     </ProtectedRoute>
                   }
                 />
               </Routes>
-              <About />
+              {location.pathname !== "/saved-news" && <About />}
               <Footer />
               <LoginModal
                 isOpen={activeModal === "login"}

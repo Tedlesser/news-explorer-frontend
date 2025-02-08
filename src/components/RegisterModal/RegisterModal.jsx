@@ -2,7 +2,7 @@ import "./RegisterModal.css";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { useState, useEffect } from "react";
 import LoginModal from "../../components/LoginModal/LoginModal";
-import { checkToken } from "../../utils/auth";
+import {checkToken} from "../../utils/auth";
 
 const RegisterModal = ({ onSignUp, isOpen, onClose, handleLoginModal }) => {
   const [userEmail, setUserEmail] = useState("");
