@@ -52,7 +52,7 @@ const RegisterModal = ({ onSignUp, isOpen, onClose, handleLoginModal }) => {
       onSubmit={handleSubmit}
       isOpen={isOpen}
     >
-      <button type="button" className="modal__escape"></button>
+
       <fieldset className="modal__inputs">
         <label className="modal__label">
           Email*

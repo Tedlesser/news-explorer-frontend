@@ -13,28 +13,25 @@ const Results = ({
   onCardDelete,
   savedArticles,
   isLoggedIn,
-  
 }) => {
- if (isLoading) {
+  if (isLoading) {
     return (
       <div className="results result_type_preloader">
         <Preloader />
         <div>Searching for news...</div>
       </div>
     );
- }
+  }
 
   if (error) {
     return (
       <div className="results">
         <img className="results-image"></img>
         <p>
-          <span className="results-not-found-title">
-            Nothing found
-          </span>{" "}
+          <span className="results-not-found-title">Nothing found</span>{" "}
         </p>
         <span className="results-not-found-description">
-          Sorry, but nothing matched your search terms. 
+          Sorry, but nothing matched your search terms.
         </span>
       </div>
     );

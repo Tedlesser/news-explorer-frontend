@@ -6,10 +6,11 @@
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     width: 100%;
-    max-width: 27%;
-    margin: 20px;
+    max-width: 400px;
+    max-height: 576px;
     text-align: left;
     position: relative;
+    
   } 
   
   /* Image styling */
@@ -28,8 +29,7 @@
   /* Title styling */
   .news-card__title {
     height: auto;
-    flex-wrap: wrap;
-    max-width: auto;
+    flex-wrap: wrap;  
     font-size: 1.8vw;
     margin: 5px 0;
     color: #1A1B22;

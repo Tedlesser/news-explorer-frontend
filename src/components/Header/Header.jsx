@@ -1,26 +1,125 @@
-import React from "react";
+import React, { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { FiMenu, FiX } from "react-icons/fi";
 import "./Header.css";
-import {Link} from 'react-router-dom';
 
-const Header = ({handleLoginClick, isLoggedIn, handleLogout }) => {
-
-  const isSavedNews = location.pathname === "/saved-news"
+const Header = ({ handleLoginClick, isLoggedIn, handleLogout }) => {
+  const location = useLocation();
+  const isSavedNews = location.pathname === "/saved-news";
+  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="header">
-      <div className={isSavedNews ? "header__logo__saved-news-active" : "header__logo"}>NewsExplorer</div>
-      <div className="mobile__dropdown_header">
-        <a href="/" className={isSavedNews ? "header__button-home__saved-news-active" : "header__button-home"}>Home</a>
-        {isLoggedIn && 
-          <p className="header__button-saved">
-            <Link to="/saved-news" className={isSavedNews ? "header__button-saved__saved-news-active" : "header__button-saved"}> Saved Articles </Link>
-          </p>}
-        {isLoggedIn ? (
-          <p onClick={handleLogout} className={isSavedNews ? "header__button-logout-signin__saved-news-active" : "header__button-logout-signin"}>Logout</p>
-        ) : (
-          <p onClick={handleLoginClick} className={isSavedNews ? "header__button-signin__saved-news-active" : "header__button-signin"}>Sign In</p>
-        )}
+    <header
+      className={`header ${menuOpen ? "menu-open" : ""} ${
+        isSavedNews ? "header--saved-news" : ""
+      }`}
+    >
+      {/* Logo */}
+      <div
+        className={`header__logo ${isSavedNews ? "header__logo--black" : ""}`}
+      >
+        NewsExplorer
       </div>
+
+      {/* Hamburger Menu Icon - Hidden by Default, Visible at ≤ 420px */}
+      <button
+        className={`header__menu-icon ${
+          isSavedNews ? "header__menu-icon--black" : ""
+        }`}
+        onClick={() => setMenuOpen(!menuOpen)}
+      >
+        {menuOpen ? <FiX size={28} /> : <FiMenu size={28} />}
+      </button>
+
+      {/* Desktop Navigation (Hidden on Mobile) */}
+      <nav className="header__desktop-nav">
+        <Link
+          to="/"
+          className={
+            isSavedNews ? "header__button-home_active" : "header__button-home"
+          }
+        >
+          Home
+        </Link>
+        {isLoggedIn && (
+          <Link
+            to="/saved-news"
+            className={
+              isSavedNews
+                ? "header__button-saved_active"
+                : "header__button-saved"
+            }
+          >
+            Saved Articles
+          </Link>
+        )}
+        {isLoggedIn ? (
+          <p
+            onClick={handleLogout}
+            className={
+              isSavedNews
+                ? "header__button-logout_active"
+                : "header__button-logout"
+            }
+          >
+            Logout
+          </p>
+        ) : (
+          <p
+            onClick={handleLoginClick}
+            className={
+              isSavedNews
+                ? "header__button-signin_active"
+                : "header__button-signin"
+            }
+          >
+            Sign In
+          </p>
+        )}
+      </nav>
+
+      {/* Mobile Dropdown Menu - Only Visible When Menu is Open */}
+      {menuOpen && (
+        <nav className="mobile__dropdown">
+          <Link
+            to="/"
+            className="mobile__dropdown-item"
+            onClick={() => setMenuOpen(false)}
+          >
+            Home
+          </Link>
+          {isLoggedIn && (
+            <Link
+              to="/saved-news"
+              className="mobile__dropdown-item"
+              onClick={() => setMenuOpen(false)}
+            >
+              Saved Articles
+            </Link>
+          )}
+          {isLoggedIn ? (
+            <button
+              className="mobile__dropdown-signin_button"
+              onClick={() => {
+                handleLogout();
+                setMenuOpen(false);
+              }}
+            >
+              Logout
+            </button>
+          ) : (
+            <button
+              className="mobile__dropdown-signin_button"
+              onClick={() => {
+                handleLoginClick();
+                setMenuOpen(false);
+              }}
+            >
+              Sign In
+            </button>
+          )}
+        </nav>
+      )}
     </header>
   );
 };

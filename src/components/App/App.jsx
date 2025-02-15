@@ -217,8 +217,7 @@ function App() {
     <>
       <div className="page">
         <CurrentUserContext.Provider value={userContext}>
-          <div className="page__content">
-            <div className={isSavedNews ? "page__style__saved-news-active" : "page__style"}>
+            <div className={isSavedNews ? "page__content_saved-news-active" : "page__content"}>
               <Header 
                 handleLoginClick={handleLoginClick} 
                 handleLogin={handleLogin} 
@@ -236,22 +235,15 @@ function App() {
                         isLoading={isLoading}
                         handleSearch={handleSearch}
                         isSubmitted={isSubmitted}
+                        articles={articles}
+                        error={error}
+                        onCardLike={handleCardLike}
+                        onCardDelete={handleCardDelete}
+                        savedArticles={savedArticles}
+                        searchQuery={searchQuery}
+                        visibleArticles={visibleArticles}
+                        showMoreArticles={showMoreArticles}
                       />
-                      {isSubmitted && (
-                        <Results
-                          isLoading={isLoading}
-                          error={error}
-                          articles={articles}
-                          onCardLike={handleCardLike}
-                          onCardDelete={handleCardDelete}
-                          savedArticles={savedArticles}
-                          searchQuery={searchQuery}
-                          handleSearch={handleSearch}
-                          visibleArticles={visibleArticles}
-                          showMoreArticles={showMoreArticles}
-                          isLoggedIn={isLoggedIn}
-                        />
-                      )}
                     </>
                   }
                 />
@@ -271,7 +263,7 @@ function App() {
                   }
                 />
               </Routes>
-              {location.pathname !== "/saved-news" && <About />}
+              {/* {location.pathname !== "/saved-news" && <About/>} */}
               <Footer />
               <LoginModal
                 isOpen={activeModal === "login"}
@@ -289,7 +281,6 @@ function App() {
                 handleRegistration={handleRegistration}
               />
             </div>
-          </div>
         </CurrentUserContext.Provider>
       </div>
     </>

@@ -1,10 +1,11 @@
-.header {
+header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   /* flex-wrap: wrap; */
   padding: 0 10px;
+  max-width: 1440px;
 }
 
 .header__logo {
@@ -17,7 +18,7 @@
   padding: 0 5px 0;
 }
 
-.header__logo__saved-news-active {
+.header__logo--black {
   font-size: 24px;
   font-weight: 700;
   font-family: "Roboto", Arial, Helvetica, sans-serif;
@@ -27,10 +28,15 @@
   padding: 0 5px 0;
 }
 
-.header__nav {
+.header__desktop-nav {
   max-width: 700px;
   display: flex;
   gap: 42px;
+}
+
+/* Default - Hide Menu Icon */
+.header__menu-icon {
+  display: none;
 }
 
 .header__button-home {
@@ -59,7 +65,7 @@
   cursor: pointer;
 }
 
-.header__button-home__saved-news-active {
+.header__button-home_active {
   font-weight: 500;
   font-family: "Roboto", Arial, Helvetica, sans-serif;
   font-size: 18px;
@@ -93,31 +99,18 @@
   background-color: transparent;
 }
 
-.header__button-signin-outline {
-  width: 176px;
+.header__button-signin_active {
+  font-weight: 500;
+  font-family: "Roboto", Arial, Helvetica, sans-serif;
+  padding: 8px 80px;
+  margin: 20px 13px 13px 20px;
+  font-size: 18px;
+  color: black;
+  border-style: solid;
+  border-radius: 30px;
+  border-width: 2px;
+  border-color: black;
   background-color: transparent;
-  color: white;
-  border: 2px solid #ccc;
-  opacity: 1;
-  transition: opacity 0.5s ease-in-out;
-}
-
-.header__button-signin-outline:hover {
-  cursor: pointer;
-  opacity: 0.6;
-}
-
-.header__menu-icon {
-  display: block;
-  size: 100px;
-}
-
-.header__profile-options {
-  width: auto;
-  display: flex;
-  column-gap: 50px;
-  align-items: center;
-  flex-direction: row;
 }
 
 .header__button-saved {
@@ -128,14 +121,14 @@
   font-family: "Roboto", Arial, Helvetica, sans-serif;
   font-weight: 500;
   padding-bottom: 8px;
-  padding-right: 30px;
+  padding-left: 10px;
   width: auto;
   margin-top: 30px;
   text-decoration: none;
   white-space: nowrap;
 }
 
-.header__button-saved__saved-news-active {
+.header__button-saved_active {
   background-color: transparent;
   color: black;
   border: none;
@@ -169,63 +162,7 @@
   color: #fff;
 }
 
-.header__button-logout:hover {
-  opacity: 0.6;
-  cursor: pointer;
-}
-
-.profile-link {
-  color: white;
-  text-decoration: none;
-}
-
-.header__signed-in {
-  background-image: none;
-  background-color: white;
-}
-
-.header__logo-signed-in {
-  color: #1a1b22;
-  font-size: 24px;
-  font-weight: 700;
-  font-family: "Roboto", Arial, Helvetica, sans-serif;
-  width: auto;
-  margin: 30px 0 26px 104px;
-  padding: 0 5px 0;
-}
-
-.profile-link__signin {
-  background-color: transparent;
-  color: #1a1b22;
-  border: none;
-  font-size: 18px;
-  font-family: "Roboto", Arial, Helvetica, sans-serif;
-  font-weight: 500;
-  padding-bottom: 8px;
-  width: auto;
-  margin-top: 30px;
-  text-decoration: none;
-}
-
-.header__button-logout-signin {
-  max-width: 120px;
-  width: 100%;
-  height: 60px;
-  border: 1px solid #fff;
-  border-radius: 30px;
-  margin-right: 40px;
-  background-image: url("../../assets/Union.png");
-  background-repeat: no-repeat;
-  background-position: center;
-  margin: 20px 13px 13px 20px;
-  transition: opacity 0.5s ease-in-out;
-  opacity: 1;
-  margin: 20px 13px 13px 20px;
-  padding: 0px 40px;
-  color: #fff;
-}
-
-.header__button-logout-signin__saved-news-active {
+.header__button-logout_active {
   max-width: 120px;
   width: 100%;
   height: 60px;
@@ -243,6 +180,11 @@
   color: black;
 }
 
+.header__button-logout:hover {
+  opacity: 0.6;
+  cursor: pointer;
+}
+
 .header__button-home-signin {
   font-weight: 500;
   font-family: "Roboto", Arial, Helvetica, sans-serif;
@@ -258,10 +200,6 @@
   color: #1a1b22;
   opacity: 1;
   transition: opacity 0.5s ease-in-out;
-}
-
-.mobile__dropdown_header {
-  display: flex;
 }
 
 @media (max-width: 768px) {
@@ -301,10 +239,8 @@
   }
 
   .header__button-signin {
-    max-width: 170px;
-    width: 100%;
     padding: 8px 20px;
-    margin: 19px 40px 13px 0;
+    margin: 19px 40px 13px 19px;
     font-size: 18px;
     color: white;
     border-radius: 20px;
@@ -450,4 +386,45 @@
     color: white;
     padding: 0 5px 0;
   }
+
+  .menu-icon {
+    display: block; /* Show menu icon */
+    color: white;
+  }
+
+  .mobile__dropdown_header {
+    display: none; /* Hide menu by default */
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    right: 10px;
+    background: white;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    border-radius: 8px;
+  }
+
+  .mobile__dropdown_header.open {
+    display: flex; /* Show menu when open */
+  }
+
+  .header__menu-icon {
+    display: block; /* Show only on small screens */
+    right: 16px;  /* Align to the right */
+    top: 20px;    /* Adjust top positioning */
+    background: none;
+    border: none;
+    cursor: pointer;
+    color:#fff;
+    z-index: 10;  /* Ensure it appears above other elements */
+  }
+
+  /* Hide desktop navigation on small screens */
+  .desktop-nav {
+    display: none;
+  }
 }
+
+
+
+

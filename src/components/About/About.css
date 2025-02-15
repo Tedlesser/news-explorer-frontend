@@ -5,6 +5,8 @@
     padding: 0;
     position: relative;
     background-color: white;
+    max-width: 1440px;
+    width: 100%;
   }
   
   .about__image-container {

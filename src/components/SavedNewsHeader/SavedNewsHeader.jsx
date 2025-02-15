@@ -1,3 +1,4 @@
+import React from "react";
 import SavedCardList from "../SavedCardList/SavedCardList";
 import "./SavedNewsHeader.css";
 
@@ -6,7 +7,9 @@ const SavedNewsHeader = ({ savedArticles }) => {
   return (
     <div className="saved-news-header">
       <header className="saved-news-header-container">
-        <h1 className="saved-news-header__title">Saved articles</h1>
+        <div className="saved-news-header__top">
+          <h1 className="saved-news-header__title">Saved articles</h1>
+        </div>
         <p className="saved-news-header__subtitle">
           Ted, you have 5 saved <br />
           articles
@@ -17,4 +20,5 @@ const SavedNewsHeader = ({ savedArticles }) => {
     </div>
   );
 };
+
 export default SavedNewsHeader;

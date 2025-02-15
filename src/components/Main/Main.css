@@ -3,13 +3,9 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-  }
-  
-  .main_content {
     text-align: left;
     color: white;
     height: auto;
-    max-width: 608px;
   }
   
   .main__title {
@@ -39,7 +35,6 @@
       max-width: 385px;
       width: 100%;
       margin-top: 38px;
-      margin-left: 0;
       font-size: 36px;
       line-height: 1.2;
     }

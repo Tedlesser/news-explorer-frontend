@@ -9,36 +9,33 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-  }
-  
-  .page__style {
     background-image: url("../../assets/georgia-de-lotz.png");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
   }
 
-  .page__style__saved-news-active {
+  .page__content_saved-news-active {
     background-color: white;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;}
   
   @media  (max-width: 1440px) {
-    .page__style {
+    .page__content {
       background-size: cover;
     }
   }
   
   @media  (max-width: 768px) {
-    .page__style {
+    .page__content {
       background-size: cover;
     }
   }
   
   @media (max-width: 480px) {
   
-    .page__style {
+    .page__content {
       background-size: cover;
     }
   }

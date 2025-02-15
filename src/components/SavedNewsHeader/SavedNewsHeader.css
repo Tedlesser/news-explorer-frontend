@@ -45,3 +45,10 @@
   line-height: 24px;
   text-align: left;
 }
+
+/* SavedNewsHeader.css */
+@media (max-width: 768px) {
+  .saved-news-header__menu-icon {
+    display: block; /* Show the hamburger menu icon on smaller screens */
+  }
+}
