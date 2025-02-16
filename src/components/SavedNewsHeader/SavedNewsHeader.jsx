@@ -3,10 +3,9 @@ import SavedCardList from "../SavedCardList/SavedCardList";
 import "./SavedNewsHeader.css";
 
 const SavedNewsHeader = ({ savedArticles }) => {
-  console.log("savedArticles", savedArticles);
   return (
     <div className="saved-news-header">
-      <header className="saved-news-header-container">
+      <div className="saved-news-header__container">
         <div className="saved-news-header__top">
           <h1 className="saved-news-header__title">Saved articles</h1>
         </div>
@@ -15,7 +14,7 @@ const SavedNewsHeader = ({ savedArticles }) => {
           articles
         </p>
         <p className="saved-news-header__keywords">By keywords:</p>
-      </header>
+      </div>
       <SavedCardList savedArticles={savedArticles} />
     </div>
   );

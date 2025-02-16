@@ -3,10 +3,8 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 
 import "./App.css";
 import Main from "../Main/Main";
-import About from "../About/About";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
-import Results from "../Results/Results";
 import LoginModal from "../LoginModal/LoginModal";
 import RegisterModal from "../RegisterModal/RegisterModal";
 import { fetchNews } from "../../utils/newsAPI";
@@ -237,7 +235,7 @@ function App() {
                         isSubmitted={isSubmitted}
                         articles={articles}
                         error={error}
-                        onCardLike={handleCardLike}
+                        handleCardLike={handleCardLike}
                         onCardDelete={handleCardDelete}
                         savedArticles={savedArticles}
                         searchQuery={searchQuery}

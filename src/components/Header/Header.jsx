@@ -9,10 +9,16 @@ const Header = ({ handleLoginClick, isLoggedIn, handleLogout }) => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
+    // <header
+    //   className={`header ${menuOpen ? "menu-open" : ""} ${
+    //     isSavedNews ? "header--saved-news" : ""
+    //   }`}
+    // >
+
     <header
-      className={`header ${menuOpen ? "menu-open" : ""} ${
-        isSavedNews ? "header--saved-news" : ""
-      }`}
+    className={`header ${menuOpen ? "menu-open" : ""} ${
+    isSavedNews ? "header--saved-news" : ""
+    }`}
     >
       {/* Logo */}
       <div

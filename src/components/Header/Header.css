@@ -149,8 +149,8 @@ header {
   max-width: 120px;
   width: 100%;
   height: 60px;
-  background-color: white;
-  border: none;
+  background-color: transparent;
+  border: 1px solid white;
   border-radius: 15%;
   margin-right: 40px;
   background-image: url("../../assets/Union.png");
@@ -410,21 +410,81 @@ header {
 
   .header__menu-icon {
     display: block; /* Show only on small screens */
-    right: 16px;  /* Align to the right */
-    top: 20px;    /* Adjust top positioning */
+    right: 16px; /* Align to the right */
+    top: 20px; /* Adjust top positioning */
     background: none;
     border: none;
     cursor: pointer;
-    color:#fff;
-    z-index: 10;  /* Ensure it appears above other elements */
+    color: #fff;
+    z-index: 10; /* Ensure it appears above other elements */
   }
 
   /* Hide desktop navigation on small screens */
-  .desktop-nav {
+  .header__desktop-nav {
     display: none;
   }
 }
 
+/* Ensure the header stays visible and turns black when the menu is open */
+.header.menu-open {
+  background-color: #1a1b22;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
 
+/* Ensure logo and menu icon turn white */
+.header.menu-open .header__logo,
+.header.menu-open .header__menu-icon {
+  color: white;
+}
 
+/* Mobile dropdown menu styles */
+.mobile__dropdown {
+  position: absolute;
+  top: 100%; /* Makes sure it appears below the header */
+  left: 0;
+  width: 100%;
+  background-color: #1a1b22;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 0;
+  z-index: 999;
+}
 
+/* Mobile dropdown links */
+.mobile__dropdown-item {
+  color: white;
+  font-size: 18px;
+  text-decoration: none;
+  padding: 10px 0;
+  width: 100%;
+  text-align: center;
+  transition: color 0.3s ease-in-out;
+}
+
+.mobile__dropdown-item:hover {
+  color: gray;
+}
+
+/* Mobile sign-in/logout button */
+.mobile__dropdown-signin_button {
+  background: transparent;
+  color: white;
+  border: 2px solid white;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+  border-radius: 30px;
+  width: 80%;
+  text-align: center;
+  transition: background 0.3s ease-in-out;
+}
+
+.mobile__dropdown-signin_button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}

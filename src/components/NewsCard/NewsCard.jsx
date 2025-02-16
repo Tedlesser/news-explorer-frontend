@@ -21,11 +21,6 @@ const NewsCard = ({
     }
   };
 
-  // Handle like button click
-  const handleLikeClick = () => {
-    onCardLike(article); // Call onCardLike when the like button is clicked
-  };
-
   return (
     <div className="news-card">
       <img
@@ -40,17 +35,24 @@ const NewsCard = ({
           : "Unknown Date"}
       </p>
       <div className="news-card__content">
-        <h3 className="news-card__title">{article?.title || "Untitled Article"}</h3>
+        <h3 className="news-card__title">
+          {article?.title || "Untitled Article"}
+        </h3>
         <p className="news-card__description">
           {article?.description || "No description available."}
         </p>
         <div className="news-card__actions">
-          {isLoggedIn ? (<button
-            className={`news-card__bookmark ${isSaved ? "saved" : ""}`}
-            onClick={handleBookmarkClick}
-            aria-label={isSaved ? "Remove from saved articles" : "Save article"}
-          >
-          </button>) :("")}
+          {isLoggedIn ? (
+            <button
+              className={`news-card__bookmark ${isSaved ? "saved" : ""}`}
+              onClick={handleBookmarkClick}
+              aria-label={
+                isSaved ? "Remove from saved articles" : "Save article"
+              }
+            ></button>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </div>
