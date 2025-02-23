@@ -254,7 +254,7 @@ header {
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 420px) {
   .header {
     max-width: 480px;
   }
@@ -487,3 +487,5 @@ header {
 .mobile__dropdown-signin_button:hover {
   background: rgba(255, 255, 255, 0.2);
 }
+
+
