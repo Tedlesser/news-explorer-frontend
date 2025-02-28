@@ -1,4 +1,3 @@
-
 import "./ModalWithForm.css";
 
 const ModalWithForm = ({
@@ -14,7 +13,7 @@ const ModalWithForm = ({
   isActive,
 }) => {
   return (
-    <div className={modal ${isOpen ? "modal_open" : ""}}>
+    <div className={`modal ${isOpen ? "modal_open" : ""}`}>
       <div className="modal__form-container">
         <h3 className="modal__title">{title}</h3>
         <form onSubmit={onSubmit}>
@@ -39,4 +38,5 @@ const ModalWithForm = ({
     </div>
   );
 };
-export default ModalWithForm
+
+export default ModalWithForm;
